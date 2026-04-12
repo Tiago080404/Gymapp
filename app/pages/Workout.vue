@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import WorkoutDays from "~/components/WorkoutDays.vue";
-import type { Workout } from "~/types/workout";
+import type { Workout } from "#shared/types/workout";
 
 const workouts = ref<Workout[]>([]);
 const workoutDaysOpen = ref(false);

@@ -14,7 +14,7 @@ export async function saveNewExericse(name: string, muscle_group: string) {
 
 export async function getExercisesForDay(workoutDayId: number) {
   const result = await pool.query(
-    "SELECT exercises.* FROM workoutdayexercise JOIN exercises ON workoutdayexercise.exercise_id = exercises.id WHERE workoutdayexercise.workoutday_id = $1",
+    "SELECT exercises.name, exercises.muscle, workoutdayexercise.* FROM workoutdayexercise JOIN exercises ON workoutdayexercise.exercise_id = exercises.id WHERE workoutdayexercise.workoutday_id = $1",
     [workoutDayId],
   );
   return result.rows;

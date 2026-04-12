@@ -4,7 +4,13 @@
   >
     Exercises
   </h1>
-
+  <UButton
+    size="md"
+    color="primary"
+    variant="solid"
+    @click="workoutStarted = true"
+    >Start Workout</UButton
+  >
   <div class="flex flex-col divide-y divide-zinc-800">
     <div
       v-for="(exercise, index) in exercises"
@@ -56,6 +62,11 @@
       </div>
     </div>
   </div>
+  <div class="flex justify-center">
+    <UButton @click="saveWorkout" size="sm" color="error" variant="solid"
+      >End Workout</UButton
+    >
+  </div>
 </template>
 <script setup lang="ts">
 import { type Exercise } from "~/types/exercise";
@@ -68,6 +79,8 @@ const editing = ref<{ index: number | null; field: string | null }>({
   index: null,
   field: null,
 });
+const workoutStarted = ref(false);
+const toast = useToast();
 
 onMounted(async () => {
   await getExercises();
@@ -75,15 +88,23 @@ onMounted(async () => {
 const getExercises = async () => {
   try {
     const data = await $fetch(`/api/exercises/${props.dayId}/exercises`);
+    console.log(data);
     exercises.value = data;
   } catch (err) {
     console.log("ERROR", err);
   }
 };
 const editExercise = (index: number, field: string) => {
-  editing.value = { index, field };
+  if (workoutStarted.value) {
+    editing.value = { index, field };
+  } else {
+    toast.add({ title: "Workout not started!" });
+  }
 };
 const stopEditExercise = () => {
   editing.value = { index: null, field: null };
+};
+const saveWorkout = async () => {
+  const response = await $fetch("");
 };
 </script>

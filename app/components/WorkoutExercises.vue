@@ -81,7 +81,7 @@
 </template>
 <script setup lang="ts">
 import type { WorkoutDayExercise } from "~~/shared/types/workoutDayExercise";
-
+const emits = ["close"];
 const props = defineProps({
   dayId: { type: Number, required: true },
 });
@@ -115,9 +115,14 @@ const stopEditExercise = () => {
   editing.value = { index: null, field: null };
 };
 const saveFinishedWorkout = async () => {
-  const response = await $fetch("/api/workout/workoutDayExercise", {
-    method: "PATCH",
-    body: exercises.value,
-  });
+  if (workoutStarted.value) {
+    await $fetch("/api/workout/workoutDayExercise", {
+      method: "PATCH",
+      body: exercises.value,
+    });
+    toast.add({ title: "Workout finished!" });
+  } else {
+    toast.add({ title: "You have to start the workout first!" });
+  }
 };
 </script>

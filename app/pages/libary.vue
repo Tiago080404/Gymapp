@@ -46,11 +46,13 @@
       ><UIcon name="i-lucide-plus"></UIcon
     ></UButton>
   </div>
+  <Navbar></Navbar>
 </template>
 
 <script setup lang="ts">
+import Navbar from "~/components/Navbar.vue";
 import NewExerciseModal from "~/components/NewExerciseModal.vue";
-import type { Exercise } from "~/types/exercise";
+import type { Exercise } from "#shared/types/exercise";
 const search = ref("");
 const selected = ref("All");
 const addNewExercise = ref(false);

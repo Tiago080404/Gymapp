@@ -4,7 +4,11 @@
   >
     <div class="bg-[#192438] rounded-xl p-8 w-[380px] max-w-[90vw]">
       <div v-if="!openWorkoutExercise">
-        <h1 class="flex justify-center">Workout</h1>
+        <h1
+          class="flex justify-center text-lg font-bold tracking-widest uppercase text-zinc-400 mb-6"
+        >
+          Workoutdays
+        </h1>
         <div
           v-for="workout in workoutDays"
           @click="selectWorkoutDay(workout.id)"
@@ -14,14 +18,17 @@
         </div>
       </div>
       <div v-else>
-        <WorkoutExercises :dayId="selectedWorkoutDayId"></WorkoutExercises>
+        <WorkoutExercises
+          :dayId="selectedWorkoutDayId"
+          @close="openWorkoutExercise = false"
+        ></WorkoutExercises>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import type { Exercise } from "~/types/exercise";
-import type { Workout } from "~/types/workout";
+import type { Exercise } from "#shared/types/exercise";
+import type { Workout } from "#shared/types/workout";
 import WorkoutExercises from "./WorkoutExercises.vue";
 const workoutDays = ref<Exercise[]>([]);
 const openWorkoutExercise = ref(false);

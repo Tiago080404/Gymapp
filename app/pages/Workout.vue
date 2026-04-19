@@ -18,10 +18,12 @@
     </div>
 
   </div>
+  <Navbar></Navbar>
 </template>
 <script setup lang="ts">
 import WorkoutDays from "~/components/WorkoutDays.vue";
 import type { Workout } from "#shared/types/workout";
+import Navbar from "~/components/Navbar.vue";
 
 const workouts = ref<Workout[]>([]);
 const workoutDaysOpen = ref(false);

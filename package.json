@@ -8,9 +8,11 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test": "vitest"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
     "@iconify-json/lucide": "^1.2.96",
     "@iconify-json/simple-icons": "^1.2.72",
     "@nuxt/ui": "^4.5.1",
@@ -20,9 +22,13 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@nuxt/test-utils": "^4.0.2",
     "@types/pg": "^8.18.0",
+    "@vue/test-utils": "^2.4.6",
     "eslint": "^10.0.3",
+    "happy-dom": "^20.9.0",
     "typescript": "^5.9.3",
+    "vitest": "^4.1.4",
     "vue-tsc": "^3.2.5"
   },
   "packageManager": "pnpm@10.30.3"

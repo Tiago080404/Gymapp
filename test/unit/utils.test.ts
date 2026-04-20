@@ -1,4 +1,4 @@
-import { describe, it, test, vi,expect } from "vitest";
+import { describe, it, test, vi, expect } from "vitest";
 import { pool } from "../../server/utils/db";
 import { mount } from "@vue/test-utils";
 import Libary from "@/pages/libary.vue";
@@ -13,18 +13,34 @@ describe("just a simple test", () => {
   it("just to get green", () => {});
 });
 describe("Exercises", () => {
-  it("", () => {
-    const mockExercises = [
+  const mockExercises = [
     { name: "Bench Press", muscle: "Chest" },
     { name: "Squat", muscle: "Legs" },
-    { name: "Pull Up", muscle: "Back" }
+    { name: "Pull Up", muscle: "Back" },
   ];
-
-   const wrapper = mount(Libary);
+  it("returns all exercises when selected is All", () => {
+    const wrapper = mount(Libary);
 
     wrapper.vm.exercises = mockExercises;
     wrapper.vm.selected = "All";
 
     expect(wrapper.vm.filtered).toHaveLength(3);
+  });
+
+  it("filters by selected musclegroup", () => {
+    const wrapper = mount(Libary);
+
+    wrapper.vm.exercises = mockExercises;
+    wrapper.vm.selected = "Chest";
+
+    expect(wrapper.vm.filtered).toHaveLength(1);
+  });
+  it("filter by searched exercise", () => {
+    const wrapper = mount(Libary)
+
+    wrapper.vm.exercises = mockExercises
+    wrapper.vm.search = "Squat"
+
+    expect(wrapper.vm.filtered[0].name).toBe("Squat")
   });
 });

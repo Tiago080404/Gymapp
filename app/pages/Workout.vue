@@ -13,10 +13,9 @@
     <div v-if="workoutDaysOpen">
       <WorkoutDays
         :selected-workout="selectedWorkout"
-      
+        @close="workoutDaysOpen = false"
       ></WorkoutDays>
     </div>
-
   </div>
   <Navbar></Navbar>
 </template>

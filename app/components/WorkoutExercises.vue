@@ -3,36 +3,44 @@
     <UButton
       class="absolute -top-4 -right-4 w-8 h-8 rounded-full"
       @click="$emit('close')"
-      ><UIcon name="i-lucide-x"></UIcon
-    ></UButton>
+    >
+      <UIcon name="i-lucide-x" />
+    </UButton>
+
     <h1
       class="flex justify-center text-lg font-bold tracking-widest uppercase text-zinc-400 mb-6"
     >
       Exercises
     </h1>
+
     <UButton
       size="md"
       color="primary"
       variant="solid"
       @click="workoutStarted = true"
-      >Start Workout</UButton
     >
+      Start Workout
+    </UButton>
+
     <div class="flex flex-col divide-y divide-zinc-800">
       <div
         v-for="(exercise, index) in exercises"
-        :key="index"
+        :key="exercise.exercise_id ?? index"
         class="flex items-center justify-between py-3"
       >
-        <span class="text-sm text-zinc-300">{{ exercise.name }}</span>
+        <span class="text-sm text-zinc-300">
+          {{ exercise.name }}
+        </span>
 
         <div class="flex items-center gap-4">
           <div
             class="flex flex-col items-center cursor-pointer"
             @click="editExercise(index, 'repetitions')"
           >
-            <span class="text-[0.5rem] tracking-widest text-zinc-600 uppercase"
-              >Reps</span
-            >
+            <span class="text-[0.5rem] tracking-widest text-zinc-600 uppercase">
+              Reps
+            </span>
+
             <input
               v-if="editing.index === index && editing.field === 'repetitions'"
               v-model="exercise.repetitions"
@@ -41,18 +49,20 @@
               @keyup.enter="stopEditExercise"
               @blur="stopEditExercise"
             />
-            <span v-else class="text-sm font-bold text-yellow-400">{{
-              exercise.repetitions
-            }}</span>
+
+            <span v-else class="text-sm font-bold text-yellow-400">
+              {{ exercise.repetitions }}
+            </span>
           </div>
 
           <div
             class="flex flex-col items-center cursor-pointer"
             @click="editExercise(index, 'weight')"
           >
-            <span class="text-[0.5rem] tracking-widest text-zinc-600 uppercase"
-              >kg</span
-            >
+            <span class="text-[0.5rem] tracking-widest text-zinc-600 uppercase">
+              kg
+            </span>
+
             <input
               v-if="editing.index === index && editing.field === 'weight'"
               v-model="exercise.weight"
@@ -61,41 +71,52 @@
               @keyup.enter="stopEditExercise"
               @blur="stopEditExercise"
             />
-            <span v-else class="text-sm font-bold text-yellow-400">{{
-              exercise.weight
-            }}</span>
+
+            <span v-else class="text-sm font-bold text-yellow-400">
+              {{ exercise.weight }}
+            </span>
           </div>
         </div>
       </div>
     </div>
+
     <div class="flex justify-center">
       <UButton
-        @click="saveFinishedWorkout"
         size="sm"
         color="error"
         variant="solid"
-        >End Workout</UButton
+        @click="saveFinishedWorkout"
       >
+        End Workout
+      </UButton>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import type { WorkoutDayExercise } from "~~/shared/types/workoutDayExercise";
-const emits = ["close"];
+
+const emit = defineEmits(["close"]);
+
 const props = defineProps({
   dayId: { type: Number, required: true },
 });
+
 const exercises = ref<WorkoutDayExercise[]>([]);
+
 const editing = ref<{ index: number | null; field: string | null }>({
   index: null,
   field: null,
 });
+
 const workoutStarted = ref(false);
+
 const toast = useToast();
 
 onMounted(async () => {
   await getExercises();
 });
+
 const getExercises = async () => {
   try {
     const data = await $fetch(`/api/exercises/${props.dayId}/exercises`);
@@ -104,6 +125,7 @@ const getExercises = async () => {
     console.log("ERROR", err);
   }
 };
+
 const editExercise = (index: number, field: string) => {
   if (workoutStarted.value) {
     editing.value = { index, field };
@@ -111,9 +133,11 @@ const editExercise = (index: number, field: string) => {
     toast.add({ title: "Workout not started!" });
   }
 };
+
 const stopEditExercise = () => {
   editing.value = { index: null, field: null };
 };
+
 const saveFinishedWorkout = async () => {
   if (workoutStarted.value) {
     await $fetch("/api/workout/workoutDayExercise", {

@@ -1,7 +1,7 @@
-import { describe, it, test, vi, expect } from "vitest";
-import { pool } from "../../server/utils/db";
+import { describe, it, vi, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import Libary from "@/pages/libary.vue";
+
 vi.mock("../../server/utils/db", () => ({
   pool: {
     query: vi.fn(),
@@ -36,11 +36,11 @@ describe("Exercises", () => {
     expect(wrapper.vm.filtered).toHaveLength(1);
   });
   it("filter by searched exercise", () => {
-    const wrapper = mount(Libary)
+    const wrapper = mount(Libary);
 
-    wrapper.vm.exercises = mockExercises
-    wrapper.vm.search = "Squat"
+    wrapper.vm.exercises = mockExercises;
+    wrapper.vm.search = "Squat";
 
-    expect(wrapper.vm.filtered[0].name).toBe("Squat")
+    expect(wrapper.vm.filtered[0].name).toBe("Squat");
   });
 });

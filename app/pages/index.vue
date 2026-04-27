@@ -8,6 +8,7 @@
     >Button</UButton
   >
 </template>
+
 <script setup lang="ts">
 const allExercises = async () => {
   const rows = await $fetch("/api/exercises");

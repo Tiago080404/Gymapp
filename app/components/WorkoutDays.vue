@@ -5,10 +5,7 @@
     <div class="bg-[#192438] rounded-xl p-8 w-[380px] max-w-[90vw]">
       <div v-if="!openWorkoutExercise">
         <div class="flex justify-end">
-          <UButton
-            class="w-8 h-8 rounded-full"
-            @click="$emit('close')"
-          >
+          <UButton class="w-8 h-8 rounded-full" @click="$emit('close')">
             <UIcon name="i-lucide-x" />
           </UButton>
         </div>
@@ -37,35 +34,35 @@
 </template>
 
 <script setup lang="ts">
-import type { Exercise } from '#shared/types/exercise'
-import type { Workout } from '#shared/types/workout'
-import WorkoutExercises from './WorkoutExercises.vue'
+import type { Exercise } from "#shared/types/exercise";
+import type { Workout } from "#shared/types/workout";
+import WorkoutExercises from "./WorkoutExercises.vue";
 
-const workoutDays = ref<Exercise[]>([])
-const openWorkoutExercise = ref(false)
-const selectedWorkoutDayId = ref<number>(0)
+const workoutDays = ref<Exercise[]>([]);
+const openWorkoutExercise = ref(false);
+const selectedWorkoutDayId = ref<number>(0);
 
-const emit = defineEmits(['close'])
+defineEmits(["close"]);
 
 const props = defineProps({
   // und gewicht dazu adden in der db und sätze
-  selectedWorkout: { type: Object as () => Workout, required: true }
-})
+  selectedWorkout: { type: Object as () => Workout, required: true },
+});
 
 onMounted(() => {
-  getSpecificExercises()
-})
+  getSpecificExercises();
+});
 
 const getSpecificExercises = async () => {
   const data = await $fetch(
-    `/api/workout/${props.selectedWorkout.id}/workoutDays`
-  )
-  console.log(data)
-  workoutDays.value = data
-}
+    `/api/workout/${props.selectedWorkout.id}/workoutDays`,
+  );
+  console.log(data);
+  workoutDays.value = data;
+};
 
 const selectWorkoutDay = (id: number) => {
-  openWorkoutExercise.value = true
-  selectedWorkoutDayId.value = id
-}
+  openWorkoutExercise.value = true;
+  selectedWorkoutDayId.value = id;
+};
 </script>

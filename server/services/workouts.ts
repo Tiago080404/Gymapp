@@ -1,8 +1,8 @@
 import { pool } from "../utils/db";
-import { type Exercise } from "#shared/types/exercise";
-import { type WorkoutDayExercise } from "#shared/types/workoutDayExercise";
+import type { WorkoutDayExercise } from "#shared/types/workoutDayExercise";
+
 export async function getAllWorkouts() {
-  const result = await pool.query("SELECT * FROM workout"); //später mit userid
+  const result = await pool.query("SELECT * FROM workout"); // später mit userid
   return result.rows;
 }
 

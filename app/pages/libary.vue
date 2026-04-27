@@ -8,7 +8,7 @@
       ></NewExerciseModal>
     </div>
     <div class="flex justify-center">
-      <UInput placeholder="search..." v-model="search"></UInput>
+      <UInput v-model="search" placeholder="search..."></UInput>
     </div>
     <div class="flex justify-center mt-2">
       <UButton
@@ -33,6 +33,7 @@
     </div>
     <div
       v-for="exercise in filtered"
+      :key="exercise.id"
       class="flex items-center justify-between p-3 rounded-lg bg-elevated"
     >
       <div>
@@ -40,19 +41,20 @@
         <p class="text-xs">{{ exercise.muscle }}</p>
       </div>
     </div>
+    <div class="absolute right-0 bottom-0">
+      <UButton class="w-8 h-8 rounded-full" @click="addNewExercise = true"
+        ><UIcon name="i-lucide-plus"></UIcon
+      ></UButton>
+      <AppNavbar></AppNavbar>
+    </div>
   </div>
-  <div class="absolute right-0 bottom-0">
-    <UButton class="w-8 h-8 rounded-full" @click="addNewExercise = true"
-      ><UIcon name="i-lucide-plus"></UIcon
-    ></UButton>
-  </div>
-  <Navbar></Navbar>
 </template>
 
 <script setup lang="ts">
-import Navbar from "~/components/Navbar.vue";
+import AppNavbar from "~/components/AppNavbar.vue";
 import NewExerciseModal from "~/components/NewExerciseModal.vue";
 import type { Exercise } from "#shared/types/exercise";
+
 const search = ref("");
 const selected = ref("All");
 const addNewExercise = ref(false);
@@ -72,7 +74,7 @@ onMounted(() => {
 });
 
 const filtered = computed(() => {
-  return exercises.value?.filter((ex: any) => {
+  return exercises.value?.filter((ex: Exercise) => {
     const matchGroup = selected.value === "All" || ex.muscle === selected.value;
     const searchGroup =
       !search.value ||

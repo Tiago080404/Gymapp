@@ -1,6 +1,6 @@
 export interface WorkoutDayExercise {
   name: string;
-  muscle: MuscleGroup;
+  muscle: typeof MuscleGroup;
   exercise_id: number;
   weight: number;
   repetitions: number;

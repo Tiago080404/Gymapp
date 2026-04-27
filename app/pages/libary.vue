@@ -75,7 +75,8 @@ onMounted(() => {
 
 const filtered = computed(() => {
   return exercises.value?.filter((ex: Exercise) => {
-    const matchGroup = selected.value === "All" || ex.muscle === selected.value;
+    const matchGroup =
+      selected.value === "All" || ex.muscle.toString() === selected.value;
     const searchGroup =
       !search.value ||
       ex.name.toLowerCase().includes(search.value.toLowerCase());

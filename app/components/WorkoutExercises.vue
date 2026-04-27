@@ -32,7 +32,8 @@
           {{ exercise.name }}
         </span>
 
-        <div class="flex items-center gap-4">
+        <div
+        class="flex items-center gap-4">
           <div
             class="flex flex-col items-center cursor-pointer"
             @click="editExercise(index, 'repetitions')"
@@ -48,9 +49,10 @@
               class="w-10 bg-transparent border-b border-yellow-400 text-yellow-400 text-sm font-bold text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
               @keyup.enter="stopEditExercise"
               @blur="stopEditExercise"
-            />
+            >
 
-            <span v-else class="text-sm font-bold text-yellow-400">
+            <span v-else
+            class="text-sm font-bold text-yellow-400">
               {{ exercise.repetitions }}
             </span>
           </div>
@@ -70,7 +72,7 @@
               class="w-10 bg-transparent border-b border-yellow-400 text-yellow-400 text-sm font-bold text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
               @keyup.enter="stopEditExercise"
               @blur="stopEditExercise"
-            />
+            >
 
             <span v-else class="text-sm font-bold text-yellow-400">
               {{ exercise.weight }}
@@ -94,59 +96,59 @@
 </template>
 
 <script setup lang="ts">
-import type { WorkoutDayExercise } from "~~/shared/types/workoutDayExercise";
+import type { WorkoutDayExercise } from '~~/shared/types/workoutDayExercise'
 
-const emit = defineEmits(["close"]);
+defineEmits(['close'])
 
 const props = defineProps({
-  dayId: { type: Number, required: true },
-});
+  dayId: { type: Number, required: true }
+})
 
-const exercises = ref<WorkoutDayExercise[]>([]);
+const exercises = ref<WorkoutDayExercise[]>([])
 
 const editing = ref<{ index: number | null; field: string | null }>({
   index: null,
-  field: null,
-});
+  field: null
+})
 
-const workoutStarted = ref(false);
+const workoutStarted = ref(false)
 
-const toast = useToast();
+const toast = useToast()
 
 onMounted(async () => {
-  await getExercises();
-});
+  await getExercises()
+})
 
 const getExercises = async () => {
   try {
-    const data = await $fetch(`/api/exercises/${props.dayId}/exercises`);
-    exercises.value = data;
+    const data = await $fetch(`/api/exercises/${props.dayId}/exercises`)
+    exercises.value = data
   } catch (err) {
-    console.log("ERROR", err);
+    console.log('ERROR', err)
   }
-};
+}
 
 const editExercise = (index: number, field: string) => {
   if (workoutStarted.value) {
-    editing.value = { index, field };
+    editing.value = { index, field }
   } else {
-    toast.add({ title: "Workout not started!" });
+    toast.add({ title: 'Workout not started!' })
   }
-};
+}
 
 const stopEditExercise = () => {
-  editing.value = { index: null, field: null };
-};
+  editing.value = { index: null, field: null }
+}
 
 const saveFinishedWorkout = async () => {
   if (workoutStarted.value) {
-    await $fetch("/api/workout/workoutDayExercise", {
-      method: "PATCH",
-      body: exercises.value,
-    });
-    toast.add({ title: "Workout finished!" });
+    await $fetch('/api/workout/workoutDayExercise', {
+      method: 'PATCH',
+      body: exercises.value
+    })
+    toast.add({ title: 'Workout finished!' })
   } else {
-    toast.add({ title: "You have to start the workout first!" });
+    toast.add({ title: 'You have to start the workout first!' })
   }
-};
+}
 </script>

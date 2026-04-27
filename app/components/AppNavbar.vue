@@ -9,8 +9,10 @@
       class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm text-gray-500 transition-all duration-200"
       active-class="bg-[#03AA6B] text-white"
     >
-      <component :is="item.icon" 
-      class="w-4 h-4" />
+      <component
+        :is="item.icon"
+        class="w-4 h-4"
+      />
       {{ item.name }}
     </NuxtLink>
   </nav>
@@ -20,12 +22,12 @@
 import {
   HomeIcon,
   PlayIcon,
-  BuildingLibraryIcon,
-} from "@heroicons/vue/24/outline";
+  BuildingLibraryIcon
+} from '@heroicons/vue/24/outline'
 
 const navItems = [
   { name: 'Home', to: '/', icon: HomeIcon },
   { name: 'Libary', to: '/libary', icon: BuildingLibraryIcon },
-  { name: 'Workout', to: '/workout', icon: PlayIcon },
+  { name: 'Workout', to: '/workout', icon: PlayIcon }
 ]
 </script>

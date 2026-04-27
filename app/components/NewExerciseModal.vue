@@ -13,11 +13,7 @@
         </UButton>
       </div>
       <label class="block text-xs text-gray-400 mb-1.5">Exercise name</label>
-      <UInput
-        v-model="newExercise"
-        placeholder="new exercise"
-        class="w-3/4"
-      />
+      <UInput v-model="newExercise" placeholder="new exercise" class="w-3/4" />
       <label class="block text-xs text-gray-400 mb-1.5">Category</label>
       <USelect
         v-model="selectedMuscleGroup"
@@ -36,33 +32,33 @@
 
 <script setup lang="ts">
 const muscleGroups = ref([
-  'Back',
-  'Core',
-  'Chest',
-  'Legs',
-  'Shoulders',
-  'Arms',
-])
-const selectedMuscleGroup = ref('Back')
-const newExercise = ref('')
-const toast = useToast()
-const emit = defineEmits(['new-exercise', 'close'])
+  "Back",
+  "Core",
+  "Chest",
+  "Legs",
+  "Shoulders",
+  "Arms",
+]);
+const selectedMuscleGroup = ref("Back");
+const newExercise = ref("");
+const toast = useToast();
+const emit = defineEmits(["new-exercise", "close"]);
 
 const addNewExercise = async () => {
   try {
-    const response = await $fetch('/api/exercises/exercises', {
-      method: 'POST',
+    const response = await $fetch("/api/exercises/exercises", {
+      method: "POST",
       body: {
         muscleGroup: selectedMuscleGroup.value,
         exercise: newExercise.value,
       },
-    })
-    toast.add({ title: 'New exercise', description: `${response[0].name}` })
-    emit('new-exercise')
-    emit('close')
+    });
+    toast.add({ title: "New exercise", description: `${response[0].name}` });
+    emit("new-exercise");
+    emit("close");
   } catch (err) {
-    console.log(err)
-    toast.add({ title: 'Could not add new exercise', color: 'error' })
+    console.log(err);
+    toast.add({ title: "Could not add new exercise", color: "error" });
   }
-}
+};
 </script>
